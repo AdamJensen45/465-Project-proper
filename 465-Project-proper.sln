@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Movie", "API.Movie\API.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP.MOV", "APP.MOV\APP.MOV.csproj", "{30D3A5BA-23C5-4970-BE64-48D40EE65B20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APP.Users", "APP.Users\APP.Users.csproj", "{22BB944E-5838-4819-9B86-5F55E45BC81A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Users", "API.Users\API.Users.csproj", "{C57B32A8-382F-206E-6BE6-4E2BC6A215CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{30D3A5BA-23C5-4970-BE64-48D40EE65B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D3A5BA-23C5-4970-BE64-48D40EE65B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D3A5BA-23C5-4970-BE64-48D40EE65B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22BB944E-5838-4819-9B86-5F55E45BC81A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22BB944E-5838-4819-9B86-5F55E45BC81A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22BB944E-5838-4819-9B86-5F55E45BC81A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22BB944E-5838-4819-9B86-5F55E45BC81A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57B32A8-382F-206E-6BE6-4E2BC6A215CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57B32A8-382F-206E-6BE6-4E2BC6A215CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57B32A8-382F-206E-6BE6-4E2BC6A215CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57B32A8-382F-206E-6BE6-4E2BC6A215CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
