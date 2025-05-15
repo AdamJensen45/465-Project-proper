@@ -1,5 +1,6 @@
 ﻿using APP.MOV.Features.Movies;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace API.Movie.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class MovieController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,6 +19,7 @@ namespace API.Movie.Controllers
         }
         //Get api/movie
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Get()
         {
             IQueryable<MovieQueryResponse> query = await _mediator.Send(new MovieQueryRequest());

@@ -1,6 +1,7 @@
 ﻿using APP.MOV.Features.Directors;
 using CORE.APP.Features;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace API.Movie.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class DirectorController : ControllerBase
     {
         private readonly IMediator _mediator;
