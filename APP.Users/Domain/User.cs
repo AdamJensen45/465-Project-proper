@@ -32,5 +32,9 @@ namespace APP.Users.Domain
             get => UserSkills?.Select(us => us.SkillId).ToList();
             set => UserSkills = value?.Select(v => new UserSkill() { SkillId = v }).ToList();
         }
+
+        public string RefreshToken { get; set; }
+
+        public DateTime? RefreshTokenExpiration { get; set; }
     }
 }

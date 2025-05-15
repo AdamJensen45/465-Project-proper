@@ -85,6 +85,19 @@ namespace API.Users.Controllers
             }
         }
 
+        [HttpPost, Route("/api/[action]"), AllowAnonymous] // api/RefreshToken
+        public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _mediator.Send(request);
+                if (response.IsSuccessful)
+                    return Ok(response);
+                ModelState.AddModelError("UsersRefreshToken", response.Message);
+            }
+            return BadRequest(new CommandResponse(false, string.Join("|", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))));
+        }
+
         //// POST: api/Users
         //      [HttpPost]
         //      public async Task<IActionResult> Post(UserCreateRequest request)

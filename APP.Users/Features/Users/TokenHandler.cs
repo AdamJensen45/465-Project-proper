@@ -23,6 +23,7 @@ namespace APP.Users.Features.Users
     public class TokenResponse : CommandResponse
     {
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
 
         public TokenResponse(bool isSuccessful, string message = "", int id = 0) : base(isSuccessful, message, id)
         {
@@ -41,12 +42,20 @@ namespace APP.Users.Features.Users
                 u.UserName == request.UserName && u.Password == request.Password && u.IsActive);
             if (user is null)
                 return new TokenResponse(false, "Active user with the user name and password not found!");
+
+            // refresh token:
+            user.RefreshToken = CreateRefreshToken();
+            user.RefreshTokenExpiration = DateTime.Now.AddDays(AppSettings.RefreshTokenExpirationInDays);
+            _db.Users.Update(user);
+            await _db.SaveChangesAsync(cancellationToken);
+
             var claims = GetClaims(user);
             var expiration = DateTime.Now.AddMinutes(AppSettings.ExpirationInMinutes);
             var token = CreateAccessToken(claims, expiration);
             return new TokenResponse(true, "Token created successfully.", user.Id)
             {
-                Token = JwtBearerDefaults.AuthenticationScheme + " " + token
+                Token = JwtBearerDefaults.AuthenticationScheme + " " + token,
+                RefreshToken = user.RefreshToken
             };
         }
     }
