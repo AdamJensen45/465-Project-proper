@@ -20,7 +20,7 @@ namespace API.Movie.Controllers
         }
 
         // GET: api/director
-        [HttpGet]
+        [HttpGet,AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             IQueryable<DirectorQueryResponse> query = await _mediator.Send(new DirectorQueryRequest());

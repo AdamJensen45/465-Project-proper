@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 //Generated from Custom Template.
 namespace API.Users.Controllers
@@ -96,6 +97,50 @@ namespace API.Users.Controllers
                 ModelState.AddModelError("UsersRefreshToken", response.Message);
             }
             return BadRequest(new CommandResponse(false, string.Join("|", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage))));
+        }
+
+
+        /// <summary>
+        /// Checks the current authentication status and returns user identity and role information.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint is useful for verifying that a token is valid and extracting identity claims.
+        /// </remarks>
+        /// <returns>
+        /// - 200 OK with a detailed <see cref="CommandResponse"/> if user is authenticated.  
+        /// - 400 Bad Request if user is not authenticated or token is invalid.
+        /// </returns>
+        [HttpGet("[action]")] // GET: /api/users/authorize
+        [AllowAnonymous]
+        public IActionResult Authorize()
+        {
+            // Check if the request's identity (User) is authenticated
+            var isAuthenticated = User.Identity.IsAuthenticated;
+
+            if (isAuthenticated)
+            {
+                // Extract username from identity
+                var userName = User.Identity.Name;
+
+                // Check if user has the "Admin" role
+                var isAdmin = User.IsInRole("Admin");
+
+                // Read custom claims from JWT token
+                var role = User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                var id = User.Claims.SingleOrDefault(c => c.Type == "Id")?.Value;
+
+                // Construct a friendly message to return to the caller
+                var message = $"User authenticated. " +
+                              $"User Name: {userName}, " +
+                              $"Is Admin?: {(isAdmin ? "Yes" : "No")}, " +
+                              $"Role: {role}, " +
+                              $"Id: {id}";
+
+                return Ok(new CommandResponse(true, message));
+            }
+
+            // Token was not valid or missing — user is unauthenticated
+            return BadRequest(new CommandResponse(false, "User not authenticated!"));
         }
 
         //// POST: api/Users
